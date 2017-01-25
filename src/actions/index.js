@@ -3,7 +3,7 @@ export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 export const LOGIN_FAILURE = 'LOGIN_FAILURE'
 export const LOGOUT = 'LOGOUT'
 
-export function loginUserSuccess(access_token) {
+export function loginSuccess(access_token) {
   localStorage.setItem('access_token', access_token);
   return {
     type: LOGIN_SUCCESS,
@@ -13,7 +13,7 @@ export function loginUserSuccess(access_token) {
   }
 }
 
-export function loginUserFailure(error) {
+export function loginFailure(error) {
   localStorage.removeItem('token');
   return {
     type: LOGIN_FAILURE,
@@ -24,7 +24,7 @@ export function loginUserFailure(error) {
   }
 }
 
-export function loginUserRequest() {
+export function loginRequest() {
   return {
     type: LOGIN_REQUEST
   }
@@ -44,10 +44,10 @@ export function logoutAndRedirect() {
     }
 }
 
-export function loginUser(email, password, redirect="/") {
+export function login(email, password, redirect="/") {
     return function(dispatch) {
-        dispatch(loginUserRequest());
-        dispatch(loginUserSuccess('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwidXNlck5hbWUiOiJKb2huIERvZSIsImFkbWluIjp0cnVlfQ.WDAYU27nrQwZvJTx4NDx3y-iVlZJ3XTwes5UjaAAWAo'));
+        dispatch(loginRequest());
+        dispatch(loginSuccess('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwidXNlck5hbWUiOiJKb2huIERvZSIsImFkbWluIjp0cnVlfQ.WDAYU27nrQwZvJTx4NDx3y-iVlZJ3XTwes5UjaAAWAo'));
         // return fetch('http://localhost:3000/auth/getToken/', {
         //     method: 'post',
         //     credentials: 'include',
@@ -62,10 +62,10 @@ export function loginUser(email, password, redirect="/") {
         //     .then(response => {
         //         try {
         //             let decoded = jwtDecode(response.token);
-        //             dispatch(loginUserSuccess(response.token));
+        //             dispatch(loginSuccess(response.token));
         //             dispatch(pushState(null, redirect));
         //         } catch (e) {
-        //             dispatch(loginUserFailure({
+        //             dispatch(loginFailure({
         //                 response: {
         //                     status: 403,
         //                     statusText: 'Invalid token'
@@ -74,7 +74,7 @@ export function loginUser(email, password, redirect="/") {
         //         }
         //     })
         //     .catch(error => {
-        //         dispatch(loginUserFailure(error));
+        //         dispatch(loginFailure(error));
         //     })
     }
 }
@@ -111,7 +111,7 @@ export function fetchProtectedData(token) {
             })
             .catch(error => {
                 if(error.response.status === 401) {
-                  dispatch(loginUserFailure(error));
+                  dispatch(loginFailure(error));
                   dispatch(pushState(null, '/login'));
                 }
             })

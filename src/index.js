@@ -11,7 +11,7 @@ import App from './components/app';
 import routes from './routes/';
 import { routerMiddleware, push } from 'react-router-redux'
 import createLogger from 'redux-logger';
-import {loginUserSuccess} from './actions';
+import {loginSuccess} from './actions';
 
 let createStoreWithMiddleware;
 
@@ -30,7 +30,7 @@ const history = syncHistoryWithStore(browserHistory, store)
 
 let access_token = localStorage.getItem('access_token');
 if (access_token !== null) {
-    store.dispatch(loginUserSuccess(access_token));
+    store.dispatch(loginSuccess(access_token));
 }
 
 ReactDOM.render(
