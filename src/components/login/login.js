@@ -1,0 +1,45 @@
+import React, { Component } from 'react';
+import { Link } from 'react-router'
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import * as actions from '../../actions';
+
+require("./login.sass");
+
+class Login extends Component {
+
+  handleClick(event) {
+    event.preventDefault();
+    this.props.actions.loginUser(this.refs.email.value, this.refs.password.value, '/');
+  }
+
+  render() {
+    return (
+      <div className="container">
+        <form className="form-signin">
+          <h2 className="form-signin-heading">Please sign in</h2>
+          <input type="email" ref="email" id="inputEmail" className="form-control" placeholder="Email address" required autofocus />
+          <input type="password" ref="password" id="inputPassword" className="form-control" placeholder="Password" required />
+          <div className="checkbox">
+            <label>
+              Or <Link to="/signup">sign up</Link>
+            </label>
+          </div>
+          <button onClick={this.handleClick.bind(this)} className="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        </form>
+      </div>
+    );
+  }
+}
+
+const mapStateToProps = (state) => (
+  {
+    isAuthenticating: state.authenticationReducer.isAuthenticating,
+    message: state.authenticationReducer.message
+  });
+
+const mapDispatchToProps = (dispatch) => ({
+  actions : bindActionCreators(actions, dispatch)
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
