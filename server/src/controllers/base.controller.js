@@ -50,6 +50,4 @@ export class BaseController {
       reply(this.Boom.notFound(this.notFoundMsg));
     }
   }
-
-  // Extend with shared methods ...
 }

@@ -35,7 +35,8 @@
         "prefer-template": 0,
         "comma-dangle": 0,
         "import/no-dynamic-require": 0,
-        "import/prefer-default-export": 0
+        "import/prefer-default-export": 0,
+        "class-methods-use-this": 0
     },
     "parser": "babel-eslint",
     "env": {

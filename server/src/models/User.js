@@ -1,8 +1,8 @@
 import { BaseModelRDMS } from './BaseModel.RDMS';
 
-//
-// Main
-//
+/**
+ * Main
+ */
 export class User extends BaseModelRDMS {
 
   /**
@@ -12,4 +12,12 @@ export class User extends BaseModelRDMS {
     const tableName = 'users';
     super(tableName);
   }
+
+  /**
+   * Find user by token
+   */
+  findByToken(token) {
+    this.Knex(this.tableName).whereIn('access_token', token);
+  }
+
 }

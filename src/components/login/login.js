@@ -10,7 +10,7 @@ class Login extends Component {
 
   handleClick(event) {
     event.preventDefault();
-    this.props.actions.loginUser(this.refs.email.value, this.refs.password.value, '/');
+    this.props.actions.login(this.refs.email.value, this.refs.password.value, '/');
   }
 
   render() {
