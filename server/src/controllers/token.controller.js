@@ -32,17 +32,26 @@ export class TokenController extends BaseController {
    * @return user
    */
   create(request, reply) {
+    global.log.info({ action: 'CREATING TOKEN', payload: request.payload });
+
     if (!request.payload.email || !request.payload.password) {
-      reply({ message: 'email or password is wrong' }).code(401);
+      reply({
+        message: 'email or password is missing'
+      }).code(401);
+
       return false;
     }
 
     const email = request.payload.email;
-    const password = sha256(request.payload.password);
+    const password = request.payload.hashed ? request.payload.password : sha256(request.payload.password);
+
+    global.log.info({
+      action: 'CHECK_USER_CREDENTIALS',
+      payload: { email: email, password: password }
+    });
 
     return this.checkUserCredentials(email, password)
       .then((user) => {
-        console.log('USER ' + user);
 
         // response 401 status if credential not matching
         if (!user) {
@@ -66,14 +75,7 @@ export class TokenController extends BaseController {
         return this.User.update(user.id, { access_token: token });
       })
       .then((user) => {
-        const result = {
-          id: user[0].id,
-          email: user[0].email,
-          name: user[0].name,
-          access_token: user[0].access_token
-        };
-
-        reply(result);
+        reply({ access_token: user[0].access_token });
       })
       .catch((err) => {
         global.log.info('err checkUserCredentials: ', err);

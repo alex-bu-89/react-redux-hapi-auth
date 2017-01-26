@@ -108,11 +108,12 @@ export class BaseModelRDMS {
       };
     }
 
+    global.log.info({ action: 'INSERT DATA IN USER', payload: newData });
+
     const response = this.Knex(this.tableName).insert(newData);
 
     if (this.dbConfig.client === 'pg') {
-      // Return all inserted rows in case of Postgres
-      return response.returning('*');
+      return response.returning('*'); // Return all inserted rows in case of Postgres
     }
 
     return response;

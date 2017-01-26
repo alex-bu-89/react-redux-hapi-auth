@@ -16,9 +16,9 @@ import {loginSuccess} from './actions';
 let createStoreWithMiddleware;
 
 let middleware = applyMiddleware(
+  routerMiddleware(browserHistory),
   thunk,
   createLogger(),
-  routerMiddleware(browserHistory)
 );
 
 const store = createStore(
@@ -28,10 +28,13 @@ const store = createStore(
 
 const history = syncHistoryWithStore(browserHistory, store)
 
-let access_token = localStorage.getItem('access_token');
-if (access_token !== null) {
-    store.dispatch(loginSuccess(access_token));
-}
+// check if user is auth every route change
+history.listen( location =>  {
+  let access_token = localStorage.getItem('access_token');
+  if (access_token !== null) {
+      store.dispatch(loginSuccess(access_token));
+  }
+});
 
 ReactDOM.render(
   <Provider store={store}>

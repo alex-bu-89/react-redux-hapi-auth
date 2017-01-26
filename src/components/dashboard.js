@@ -1,11 +1,21 @@
 import React from 'react'
+import { connect } from 'react-redux';
 
 const RESULT_MESSAGE = "You're awesome!"
 
-export default class Dashboard extends React.Component {
+class Dashboard extends React.Component {
   render() {
     return (
-      <h1>{ RESULT_MESSAGE }</h1>
+      <div>
+        <h3>It is protected route</h3>
+        <h1>Hi { this.props.userName }, { RESULT_MESSAGE }</h1>
+      </div>
     );
   }
 }
+
+const mapStateToProps = (state) => ({
+  userName: state.authenticationReducer.userName,
+});
+
+export default connect(mapStateToProps)(Dashboard);

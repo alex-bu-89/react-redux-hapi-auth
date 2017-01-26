@@ -24,7 +24,7 @@ const routes = new class UserRoutes extends BaseRoutes {
 
     route.config.validate.payload = {
       name: this.joi.string().required(),
-      email: this.joi.string().email().required(),
+      email: this.joi.string().required(),
       password: this.joi.string().required(),
       access_token: [this.joi.string(), this.joi.number()],
     };

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import jwt_decode from 'jwt-decode';
 import { push } from 'react-router-redux'
 
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
@@ -10,15 +11,12 @@ const UNAUTHORIZED = 'Wrong email or password';
 const WRONG_FIELD = 'Please check your ';
 const SERVER_ERROR = 'Server error occurred';
 
-export function loginSuccess(user) {
-  localStorage.setItem('access_token', user.access_token);
+export function loginSuccess(access_token) {
+  localStorage.setItem('access_token', access_token);
   return {
     type: LOGIN_SUCCESS,
     payload: {
-      access_token: user.access_token,
-      email: user.email,
-      id: user.id,
-      name: user.name
+      access_token: access_token
     }
   }
 }
@@ -65,7 +63,7 @@ export function loginRequest() {
 export function logout() {
   localStorage.removeItem('access_token');
   return {
-      type: LOGOUT
+    type: LOGOUT
   }
 }
 
@@ -76,20 +74,20 @@ export function logoutAndRedirect() {
   }
 }
 
-export function login(email, password, redirect="/") {
+export function login(email, password, redirect="/dashboard") {
   return function(dispatch) {
     dispatch(loginRequest());
 
     // make post request
     axios.post('http://localhost:3000/token/', {
       email: email,
-      password: password
+      password: password,
+      hashed: true
     })
     .then((response) => {
       try {
-        // console.log(response);
-        dispatch(loginSuccess(response.data));
-        dispatch(push(redirect));
+        dispatch(loginSuccess(response.data.access_token));
+        dispatch(push(redirect)); // TODO state doesn't save on push
       } catch (err) {
         dispatch(loginFailure({
           response: {
@@ -104,15 +102,19 @@ export function login(email, password, redirect="/") {
     })
   }
 }
-// try {
-//     let decoded = jwtDecode(response.token);
-//     dispatch(loginSuccess(response.token));
-//     dispatch(pushState(null, redirect));
-// } catch (e) {
-//     dispatch(loginFailure({
-//         response: {
-//             status: 403,
-//             statusText: 'Invalid token'
-//         }
-//     }));
-// }
+
+export function signUpAndLogin(name, email, password, redirect="/dashboard") {
+  return function(dispatch) {
+    axios.post('http://localhost:3000/users/', {
+      name: name,
+      email: email,
+      password: password
+    })
+    .then((response) => {
+      dispatch(login(response.data[0].email, response.data[0].password));
+    })
+    .catch((error) => {
+      dispatch(loginFailure(error));
+    })
+  }
+}

@@ -23,12 +23,24 @@ export class UserController extends BaseController {
   }
 
   create(request, reply) {
-    // TODO check if email exist
+    global.log.info({ action: 'CREATING USER', payload: request.payload });
 
+    // TODO check if email exist
     const data = request.payload;
     data.password = sha256(data.password);
 
-    this.handleRequest(this.User.save(data), reply);
+    this.User.save(data)
+      .then((user) => {
+        if ((Array.isArray(user) && user.length) || user > 0) {
+          reply(user);
+        }
+        else {
+          this.Boom.badRequest('Not Found');
+        }
+      })
+      .throw((err) => {
+        this.Boom.wrap(err, 400);
+      });
   }
 
   update(request, reply) {

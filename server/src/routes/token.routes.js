@@ -23,7 +23,8 @@ const routes = new class TokenRoutes extends BaseRoutes {
     route.config.validate = {
       payload: {
         email: this.joi.string().required().description('Email'),
-        password: this.joi.string().required().description('Password')
+        password: this.joi.string().required().description('Password'),
+        hashed: this.joi.boolean()
       }
     };
     return route;

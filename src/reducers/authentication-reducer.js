@@ -1,7 +1,8 @@
 import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT } from '../actions'
-import jwtDecode from 'jwt-decode';
+import jwt_decode from 'jwt-decode';
 
 const initialState = {
+    id: null,
     userName: null,
     email: null,
     access_token: null,
@@ -18,12 +19,15 @@ function authenticationReducer (state = initialState, action) {
         'message': null
       });
     case LOGIN_SUCCESS:
+      const user = jwt_decode(action.payload.access_token).user;
+
       return Object.assign({}, state, {
         'isAuthenticating': false,
         'isAuthenticated': true,
+        'id': user.id,
         'access_token': action.payload.access_token,
-        'userName': action.payload.name,
-        'email': action.payload.email,
+        'userName': user.name,
+        'email': user.email,
         'message': 'You have been successfully logged in.'
       });
     case LOGIN_FAILURE:
@@ -31,6 +35,7 @@ function authenticationReducer (state = initialState, action) {
         'isAuthenticating': false,
         'isAuthenticated': false,
         'access_token': null,
+        'id': null,
         'userName': null,
         'email': null,
         'message': `${action.payload.message}`
@@ -39,6 +44,7 @@ function authenticationReducer (state = initialState, action) {
       return Object.assign({}, state, {
         'isAuthenticated': false,
         'access_token': null,
+        'id': null,
         'userName': null,
         'email': null,
         'message': 'You have been successfully logged out.'
