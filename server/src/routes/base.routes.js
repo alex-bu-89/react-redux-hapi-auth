@@ -76,6 +76,10 @@ export class BaseRoutes {
       path: `${this.endpoint}/{id}`,
       handler: this.controller.view.bind(this.controller),
       config: {
+        cors: {
+          origin: ['*'],
+          additionalHeaders: ['cache-control', 'x-requested-with']
+        },
         description: 'Get an entry by ID',
         tags: ['public'],
         validate: {
@@ -100,6 +104,10 @@ export class BaseRoutes {
       path: this.endpoint,
       handler: this.controller.create.bind(this.controller),
       config: {
+        cors: {
+          origin: ['*'],
+          additionalHeaders: ['cache-control', 'x-requested-with']
+        },
         description: 'Add a new entry',
         tags: ['public'],
         validate: {

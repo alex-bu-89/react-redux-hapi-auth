@@ -20,6 +20,7 @@ class Login extends Component {
           <h2 className="form-signin-heading">Please sign in</h2>
           <input type="email" ref="email" id="inputEmail" className="form-control" placeholder="Email address" required autofocus />
           <input type="password" ref="password" id="inputPassword" className="form-control" placeholder="Password" required />
+          <div>{ this.props.message }</div>
           <div className="checkbox">
             <label>
               Or <Link to="/signup">sign up</Link>

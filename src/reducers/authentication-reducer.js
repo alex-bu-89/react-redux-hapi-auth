@@ -22,7 +22,8 @@ function authenticationReducer (state = initialState, action) {
         'isAuthenticating': false,
         'isAuthenticated': true,
         'access_token': action.payload.access_token,
-        'userName': jwtDecode(action.payload.access_token).userName,
+        'userName': action.payload.name,
+        'email': action.payload.email,
         'message': 'You have been successfully logged in.'
       });
     case LOGIN_FAILURE:
@@ -31,13 +32,15 @@ function authenticationReducer (state = initialState, action) {
         'isAuthenticated': false,
         'access_token': null,
         'userName': null,
-        'message': `Authentication Error: ${action.status} ${action.message}`
+        'email': null,
+        'message': `${action.payload.message}`
       });
     case LOGOUT:
       return Object.assign({}, state, {
         'isAuthenticated': false,
         'access_token': null,
         'userName': null,
+        'email': null,
         'message': 'You have been successfully logged out.'
       });
     default:

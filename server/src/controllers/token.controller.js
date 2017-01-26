@@ -32,15 +32,21 @@ export class TokenController extends BaseController {
    * @return user
    */
   create(request, reply) {
+    if (!request.payload.email || !request.payload.password) {
+      reply({ message: 'email or password is wrong' }).code(401);
+      return false;
+    }
+
     const email = request.payload.email;
     const password = sha256(request.payload.password);
 
-    this.checkUserCredentials(email, password)
+    return this.checkUserCredentials(email, password)
       .then((user) => {
+        console.log('USER ' + user);
 
         // response 401 status if credential not matching
-        if (user.length < 1) {
-          reply({ status: 401, message: 'email or password is wrong' });
+        if (!user) {
+          reply({ message: 'email or password is wrong' }).code(401);
           return false;
         }
 
@@ -60,8 +66,14 @@ export class TokenController extends BaseController {
         return this.User.update(user.id, { access_token: token });
       })
       .then((user) => {
-        reply(user);
-        return user;
+        const result = {
+          id: user[0].id,
+          email: user[0].email,
+          name: user[0].name,
+          access_token: user[0].access_token
+        };
+
+        reply(result);
       })
       .catch((err) => {
         global.log.info('err checkUserCredentials: ', err);
@@ -87,18 +99,19 @@ export class TokenController extends BaseController {
 
     return this.User.findBy('email', email)
       .then((user) => {
-        if (user.length < 1) { return []; }
 
-        // compare passwords
+        if (global._.isEmpty(user)) { return false; }
+
+        // compare hashed passwords
         if (user[0].password === password) {
           return user[0];
         }
 
-        return [];
+        return false;
       })
       .catch((err) => {
         global.log.info(err);
-        return [];
+        return false;
       });
   }
 
