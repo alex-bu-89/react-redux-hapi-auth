@@ -1,5 +1,8 @@
 import React from 'react'
 
+/**
+ * Home component
+ */
 export default class Home extends React.Component {
   render () {
     return (

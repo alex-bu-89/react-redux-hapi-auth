@@ -7,9 +7,6 @@ import Login from '../components/login/login';
 import Signup from '../components/login/signup'
 import Dashboard from '../components/dashboard'
 
-/******************************
- * Routes of application
- *****************************/
 export default (
   <Route path='/' component={App}>
     <IndexRoute component={Home}/>

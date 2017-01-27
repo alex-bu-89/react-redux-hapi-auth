@@ -1,6 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router'
 
+/**
+ * Error component
+ */
 export default class Error extends React.Component {
   render () {
     return (

@@ -11,6 +11,10 @@ const initialState = {
     message: null
 };
 
+/**
+ * Authentication reducer
+ * Change state of the app
+ */
 function authenticationReducer (state = initialState, action) {
   switch (action.type) {
     case LOGIN_REQUEST:
@@ -19,6 +23,7 @@ function authenticationReducer (state = initialState, action) {
         'message': null
       });
     case LOGIN_SUCCESS:
+      // take info from token
       const user = jwt_decode(action.payload.access_token).user;
 
       return Object.assign({}, state, {

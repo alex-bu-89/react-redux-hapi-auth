@@ -3,6 +3,9 @@ import { connect } from 'react-redux';
 
 const RESULT_MESSAGE = "You're awesome!"
 
+/**
+ * Dashboard component
+ */
 class Dashboard extends React.Component {
   render() {
     return (

@@ -3,6 +3,9 @@ import Navigation from './navigation.js';
 import { connect } from 'react-redux';
 require("./app.sass");
 
+/**
+ * App component
+ */
 class App extends React.Component {
   render () {
     return (

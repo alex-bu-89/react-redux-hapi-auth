@@ -4,8 +4,14 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 
+/**
+ * Navigation component
+ */
 class Navigation extends React.Component {
 
+  /**
+   * Handle click
+   */
   handleClick(event) {
     event.preventDefault();
     this.props.actions.logoutAndRedirect();

@@ -3,8 +3,12 @@ import { connect } from 'react-redux';
 import { pushState } from 'redux-router';
 import Error from '../components/error';
 
+/**
+ * Make components protected
+ * Rendeing component only if user authenticated
+ * @param {React.component} Component
+ */
 export function requireAuthentication(Component) {
-
   class AuthenticatedComponent extends React.Component {
     render () {
       return (
@@ -26,5 +30,4 @@ export function requireAuthentication(Component) {
   });
 
   return connect(mapStateToProps)(AuthenticatedComponent);
-
 }
