@@ -2,6 +2,7 @@
 # App Files
 # --------------------
 config/dev.js
+config/prod.js
 logs/
 tests/coverage/
 

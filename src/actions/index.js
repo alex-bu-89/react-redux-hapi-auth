@@ -7,10 +7,17 @@ export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAILURE = 'LOGIN_FAILURE';
 export const LOGOUT = 'LOGOUT';
 
+// const API_URL = 'http://78.47.217.227:3000/';
+const API_URL = 'http://localhost:3000/';
 const UNAUTHORIZED = 'Wrong email or password';
 const WRONG_FIELD = 'Please check ';
 const SERVER_ERROR = 'Server error occurred';
 
+/**
+ * Login success action
+ * @param  {obj} access_token
+ * @return {obj}
+ */
 export function loginSuccess(access_token) {
   localStorage.setItem('access_token', access_token);
   return {
@@ -21,12 +28,16 @@ export function loginSuccess(access_token) {
   }
 }
 
+/**
+ * Login failure action
+ * @param  {obj} error
+ * @return {obj}
+ */
 export function loginFailure(error) {
   localStorage.removeItem('access_token');
   let message = '';
 
-  console.log(error.response);
-
+  // TODO refactor messageing
   if (!!error.response.status) {
     // set failure message
     switch(error.response.status){
@@ -54,12 +65,20 @@ export function loginFailure(error) {
   }
 }
 
+/**
+ * Login request action
+ * @return {obj}
+ */
 export function loginRequest() {
   return {
     type: LOGIN_REQUEST
   }
 }
 
+/**
+ * Logout action
+ * @return {obj}
+ */
 export function logout() {
   localStorage.removeItem('access_token');
   return {
@@ -67,6 +86,10 @@ export function logout() {
   }
 }
 
+/**
+ * Log out and redirect action
+ * @return {obj}
+ */
 export function logoutAndRedirect() {
   return (dispatch, state) => {
     dispatch(logout());
@@ -74,12 +97,20 @@ export function logoutAndRedirect() {
   }
 }
 
+/**
+ * Login: authenticate user and create token
+ * @param  {String} email
+ * @param  {String} password
+ * @param  {String} redirect
+ * @param  {Boolean} hashedPass
+ * @return {obj}
+ */
 export function login(email, password, redirect = "/dashboard", hashedPass = false) {
   return function(dispatch) {
     dispatch(loginRequest());
 
     // make post request
-    axios.post('http://localhost:3000/token/', {
+    axios.post(API_URL + 'token/', {
       email: email,
       password: password,
       hashed: hashedPass
@@ -103,9 +134,17 @@ export function login(email, password, redirect = "/dashboard", hashedPass = fal
   }
 }
 
+/**
+ * Register and login: create and authenticate user
+ * @param  {String} name
+ * @param  {String} email
+ * @param  {String} password
+ * @param  {String} redirect
+ * @return {obj}
+ */
 export function signUpAndLogin(name, email, password, redirect="/dashboard") {
   return function(dispatch) {
-    axios.post('http://localhost:3000/users/', {
+    axios.post(API_URL + 'users/', {
       name: name,
       email: email,
       password: password

@@ -45,11 +45,6 @@ export class TokenController extends BaseController {
     const email = request.payload.email;
     const password = request.payload.hashed ? request.payload.password : sha256(request.payload.password);
 
-    global.log.info({
-      action: 'CHECK_USER_CREDENTIALS',
-      payload: { email: email, password: password }
-    });
-
     return this.checkUserCredentials(email, password)
       .then((user) => {
 
@@ -97,10 +92,13 @@ export class TokenController extends BaseController {
    * Check user credentials
    */
   checkUserCredentials(email, password) {
-    global.log.info('check user credentials', email, password);
-
     return this.User.findBy('email', email)
       .then((user) => {
+
+        global.log.info({
+          action: 'CHECK_USER_CREDENTIALS',
+          payload: { email: email, password: password, user: user }
+        });
 
         if (global._.isEmpty(user)) { return false; }
 
