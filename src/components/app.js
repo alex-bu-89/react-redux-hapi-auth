@@ -1,14 +1,9 @@
 import React from 'react'
-import { connect } from 'react-redux';
 import Navigation from './navigation.js';
+import { connect } from 'react-redux';
 require("./app.sass");
 
-connect((state) => {
-  return {
-    isAuthenticated: state.authenticationReducer.isAuthenticated
-  };
-})
-export default class App extends React.Component {
+class App extends React.Component {
   render () {
     return (
       <div className="app">
@@ -20,3 +15,9 @@ export default class App extends React.Component {
     )
   }
 }
+
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.authenticationReducer.isAuthenticated
+});
+
+export default connect(mapStateToProps)(App);

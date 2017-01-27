@@ -1,0 +1,62 @@
+body, html
+    height:  100%
+    margin:  0px auto
+    padding: 0px auto
+    min-height: 100%
+
+body
+  background: #6298c5
+  color: #7a8195
+
+a, p, div
+  color: #495a68
+
+h1, h2, h3, h4
+  color: #e9ecee
+  text-align: center
+  font-weight: bold
+
+#app, .app
+  height: 100%
+  min-height: 100%
+
+.app
+  .navigation-bar
+    background: rgba(255,255,255,0.1)
+    color: #e9ecee
+    margin-bottom: 0
+    position: absolute
+    width: 100%
+    z-index: 900
+
+    a, p, div, span
+      color: #e9ecee
+      font-weight: bold
+
+    li a:hover,
+    li a:focus
+      background: #6298c5
+
+  .navigation
+    float: right
+    margin: 0px
+
+    li,
+    li > a
+      display: inline-block
+
+    li > a
+      padding-top: 15px
+      padding-bottom: 15px
+      line-height: 1.5em
+
+  .content
+    display: flex
+    align-items: center
+    justify-content: center
+    min-height: 200px
+    height: 100%
+
+  .error-msg
+    h1, h2, h3, h4
+      text-transform: uppercase

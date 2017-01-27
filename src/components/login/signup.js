@@ -27,6 +27,7 @@ class Signup extends Component {
               Or <Link to="/login">login</Link>
             </label>
           </div>
+          <div className="form-error-msg">{ this.props.message }</div>
         </form>
       </div>
     );

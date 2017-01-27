@@ -11,23 +11,26 @@ import App from './components/app';
 import routes from './routes/';
 import { routerMiddleware, push } from 'react-router-redux'
 import createLogger from 'redux-logger';
-import {loginSuccess} from './actions';
+import { loginSuccess } from './actions';
 
+/******************************
+ * Prepeare store
+ *****************************/
 let createStoreWithMiddleware;
-
 let middleware = applyMiddleware(
   routerMiddleware(browserHistory),
   thunk,
   createLogger(),
 );
-
 const store = createStore(
   reducers,
   middleware
 );
 
+/******************************
+ * Prepeare history
+ *****************************/
 const history = syncHistoryWithStore(browserHistory, store)
-
 // check if user is auth every route change
 history.listen( location =>  {
   let access_token = localStorage.getItem('access_token');
@@ -36,6 +39,9 @@ history.listen( location =>  {
   }
 });
 
+/******************************
+ * Render app
+ *****************************/
 ReactDOM.render(
   <Provider store={store}>
     <Router history={history} routes={routes} />

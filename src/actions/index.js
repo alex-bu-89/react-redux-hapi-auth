@@ -8,7 +8,7 @@ export const LOGIN_FAILURE = 'LOGIN_FAILURE';
 export const LOGOUT = 'LOGOUT';
 
 const UNAUTHORIZED = 'Wrong email or password';
-const WRONG_FIELD = 'Please check your ';
+const WRONG_FIELD = 'Please check ';
 const SERVER_ERROR = 'Server error occurred';
 
 export function loginSuccess(access_token) {
@@ -74,7 +74,7 @@ export function logoutAndRedirect() {
   }
 }
 
-export function login(email, password, redirect="/dashboard") {
+export function login(email, password, redirect = "/dashboard", hashedPass = false) {
   return function(dispatch) {
     dispatch(loginRequest());
 
@@ -82,7 +82,7 @@ export function login(email, password, redirect="/dashboard") {
     axios.post('http://localhost:3000/token/', {
       email: email,
       password: password,
-      hashed: true
+      hashed: hashedPass
     })
     .then((response) => {
       try {
@@ -111,7 +111,7 @@ export function signUpAndLogin(name, email, password, redirect="/dashboard") {
       password: password
     })
     .then((response) => {
-      dispatch(login(response.data[0].email, response.data[0].password));
+      dispatch(login(response.data[0].email, response.data[0].password, redirect, true));
     })
     .catch((error) => {
       dispatch(loginFailure(error));
