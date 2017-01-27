@@ -19,5 +19,6 @@ Simple application to authenticate user.
 1. Run client `npm start`
 1. Open `localhost:8000`
 
+
 ![Screenshot](https://dl.dropboxusercontent.com/u/52699014/git/react-auth.PNG)
 ![Screenshot](https://dl.dropboxusercontent.com/u/52699014/git/react-auth2.PNG)
