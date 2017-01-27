@@ -35,16 +35,16 @@ const routes = new class TokenRoutes extends BaseRoutes {
    */
   update() {
     const route = super.update();
-    route.config.description = 'Update an user token';
+    route.config.description = 'Update an token';
 
     return route;
   }
 
 }();
 
-//
-// Export public end-points
-//
+/**
+ * Export public end-points
+ */
 export default [
   routes.create(),
   routes.update(),

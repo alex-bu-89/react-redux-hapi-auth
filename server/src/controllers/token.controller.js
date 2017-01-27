@@ -22,18 +22,19 @@ export class TokenController extends BaseController {
    * @type {Object}
    */
   view(request, reply) {
-    // TODO
+    // TODO expire token
     this.handleRequest(this.User.findByToken(request.params.token), reply);
   }
 
   /**
-   * Create a new token when credentials is valid (log in)
+   * Create a new token if credentials is valid (log in)
    * Save new token to the user
    * @return user
    */
   create(request, reply) {
     global.log.info({ action: 'CREATING TOKEN', payload: request.payload });
 
+    // return 401 error if email or password is missing
     if (!request.payload.email || !request.payload.password) {
       reply({
         message: 'email or password is missing'
@@ -45,6 +46,9 @@ export class TokenController extends BaseController {
     const email = request.payload.email;
     const password = request.payload.hashed ? request.payload.password : sha256(request.payload.password);
 
+    // Check check user credentials
+    // Create new token if user is valid
+    // Update user token
     return this.checkUserCredentials(email, password)
       .then((user) => {
 
@@ -77,6 +81,10 @@ export class TokenController extends BaseController {
       });
   }
 
+  /**
+   * Update token
+   * @return user
+   */
   update(request, reply) {
     const { id } = request.params;
     const data = request.payload;
@@ -84,29 +92,33 @@ export class TokenController extends BaseController {
     this.handleRequest(this.User.update(id, data), reply);
   }
 
+  /**
+   * Remove token
+   * @return user
+   */
   remove({ params: { id } }, reply) {
     this.handleRequest(this.User.del(id), reply);
   }
 
   /**
    * Check user credentials
+   * @type {String} email
+   * @type {String} password
+   * @return user if success; otherwise false
    */
   checkUserCredentials(email, password) {
     return this.User.findBy('email', email)
       .then((user) => {
 
-        global.log.info({
-          action: 'CHECK_USER_CREDENTIALS',
-          payload: { email: email, password: password, user: user }
-        });
-
+        // return false if user not found
         if (global._.isEmpty(user)) { return false; }
 
-        // compare hashed passwords
+        // compare hashed passwords and return user
         if (user[0].password === password) {
           return user[0];
         }
 
+        // otherwise return false
         return false;
       })
       .catch((err) => {
@@ -114,5 +126,4 @@ export class TokenController extends BaseController {
         return false;
       });
   }
-
 }

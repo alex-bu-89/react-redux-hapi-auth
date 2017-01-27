@@ -51,9 +51,9 @@ const routes = new class UserRoutes extends BaseRoutes {
 
 }();
 
-//
-// Export public end-points
-//
+/**
+ * Export public end-points
+ */
 export default [
   routes.index(),
   routes.view(),

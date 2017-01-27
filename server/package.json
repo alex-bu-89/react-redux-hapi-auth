@@ -2,19 +2,14 @@
   "name": "auth-api",
   "version": "1.0.0",
   "description": "",
-  "author": "",
+  "author": "Alexander Buyanov, Claudio Bredfeldt",
   "license": "",
   "main": "index.js",
   "scripts": {
     "start": "gulp",
     "build": "babel-node --presets es2015,stage-0 ./src/index.js",
-    "test": "gulp test",
-    "test:unit": "gulp test:unit",
-    "test:api": "gulp test:api",
     "test:coverage": "gulp test:coverage",
-    "db:seed": "gulp db:seed",
     "db:migrate": "gulp db:migrate",
-    "db:rollback": "gulp db:rollback"
   },
   "dependencies": {
     "babel-cli": "^6.16.0",
