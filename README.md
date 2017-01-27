@@ -1,6 +1,6 @@
 # Authentication with React and Hapi
 
-Simple application to authenticate user.
+Simple login form with JWT authentication.
 
 - React / Redux
 - Hapi.js
