@@ -7,6 +7,3 @@ Demo: http://78.47.217.227/login
 - Hapi.js
 - Postgres
 - JWT authentication
-
-![Screenshot](https://dl.dropboxusercontent.com/u/52699014/git/react-auth.PNG)
-![Screenshot](https://dl.dropboxusercontent.com/u/52699014/git/react-auth2.PNG)
