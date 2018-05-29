@@ -11,6 +11,7 @@ const routes = new class TokenRoutes extends BaseRoutes {
    */
   constructor() {
     const endpointName = '/token';
+    
     super(new TokenController(), endpointName);
   }
 
@@ -27,6 +28,7 @@ const routes = new class TokenRoutes extends BaseRoutes {
         hashed: this.joi.boolean()
       }
     };
+    
     return route;
   }
 
