@@ -5,7 +5,6 @@ import Hapi from 'hapi';
 import path from 'path';
 import log from '../libs/logger';
 
-
 //
 // Global dependencies
 // (available across the whole App)
