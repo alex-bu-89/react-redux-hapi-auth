@@ -23,8 +23,6 @@ export class BaseController {
 
     this.notFoundMsg = notFoundMsg;
     this.Boom = Boom;
-
-    // Initialise more shared code here ...
   }
 
   /**
